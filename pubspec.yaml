@@ -35,6 +35,8 @@ dependencies:
   get_it: ^7.2.0
   injectable: ^1.5.3
 
+  # Communication with api
+  http: ^0.13.5
 
   flutter:
     sdk: flutter
