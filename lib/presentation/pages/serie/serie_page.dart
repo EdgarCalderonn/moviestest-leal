@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moviestest/domain/models/serie.dart';
+import 'package:moviestest/presentation/pages/serie_detail/serie_detail_page.dart';
 
 class SeriePage extends StatelessWidget {
   const SeriePage(this.serie, {super.key});
@@ -83,7 +84,15 @@ class SeriePage extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            ElevatedButton(onPressed: () {}, child: const Text('Watch now')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              SerieDetailPage(serie)));
+                },
+                child: const Text('Watch now')),
             const SizedBox(
               height: 30,
             ),

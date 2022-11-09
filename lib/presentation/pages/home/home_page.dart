@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moviestest/domain/models/serie.dart';
 import 'package:moviestest/presentation/bloc/home/home_bloc.dart';
 import 'package:moviestest/presentation/pages/serie/serie_page.dart';
+import 'package:moviestest/presentation/pages/serie_detail/serie_detail_page.dart';
 import 'package:moviestest/presentation/state/base_state.dart';
 
 class HomePage extends StatefulWidget {
@@ -169,95 +170,115 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ...recommended
-                              .map<Widget>((serie) => Container(
-                                    margin: const EdgeInsets.only(
-                                      bottom: 30,
-                                    ),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          height: 170,
-                                          width: 130,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: Image.network(
-                                              serie.getPosterImageUrl(
-                                                type: SerieImageType.w300,
+                              .map<Widget>((serie) => GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SeriePage(serie)));
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.only(
+                                        bottom: 30,
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Hero(
+                                            tag: serie.id!,
+                                            child: SizedBox(
+                                              height: 170,
+                                              width: 130,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Image.network(
+                                                  serie.getPosterImageUrl(
+                                                    type: SerieImageType.w300,
+                                                  ),
+                                                  fit: BoxFit.fill,
+                                                ),
                                               ),
-                                              fit: BoxFit.fill,
                                             ),
                                           ),
-                                        ),
-                                        Expanded(
-                                            child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 20,
-                                          ),
-                                          height: 170,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(serie.name!),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Row(
-                                                children: const [
-                                                  Icon(
-                                                    Icons.star,
-                                                    size: 15,
-                                                  ),
-                                                  Icon(
-                                                    Icons.star,
-                                                    size: 15,
-                                                  ),
-                                                  Icon(
-                                                    Icons.star,
-                                                    size: 15,
-                                                  ),
-                                                  Icon(
-                                                    Icons.star,
-                                                    size: 15,
-                                                  ),
-                                                  Icon(
-                                                    Icons.star,
-                                                    size: 15,
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                  'IMDb: ${serie.voteAverage}'),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  ElevatedButton(
-                                                      onPressed: () {},
-                                                      child: const Text(
-                                                          'Watch now')),
-                                                  IconButton(
-                                                      onPressed: () {},
-                                                      icon: const Icon(Icons
-                                                          .favorite_border))
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        )),
-                                      ],
+                                          Expanded(
+                                              child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                            ),
+                                            height: 170,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(serie.name!),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: const [
+                                                    Icon(
+                                                      Icons.star,
+                                                      size: 15,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      size: 15,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      size: 15,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      size: 15,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      size: 15,
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                    'IMDb: ${serie.voteAverage}'),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    ElevatedButton(
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (BuildContext
+                                                                          context) =>
+                                                                      SerieDetailPage(
+                                                                          serie)));
+                                                        },
+                                                        child: const Text(
+                                                            'Watch now')),
+                                                    IconButton(
+                                                        onPressed: () {},
+                                                        icon: const Icon(Icons
+                                                            .favorite_border))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                        ],
+                                      ),
                                     ),
                                   ))
                               .toList()
