@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:moviestest/domain/models/episode.dart';
 import 'package:moviestest/domain/models/serie.dart';
 import 'package:moviestest/domain/repository/series_repository.dart';
 import 'package:moviestest/domain/use_case/series_use_case.dart';
@@ -29,5 +30,10 @@ class SeriesUseCaseAdapter implements SeriesUseCase {
   Future<Serie> getSerie(String serieId) {
     // TODO: implement getSerie
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Episode>> getEpisodes({required int serieId, required int seasonNumber}) {
+    return repository.getEpisodes(serieId: serieId, seasonNumber: seasonNumber);
   }
 }

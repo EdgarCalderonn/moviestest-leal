@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:injectable/injectable.dart';
+import 'package:moviestest/domain/models/episode.dart';
 import 'package:moviestest/domain/models/serie.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,6 +10,8 @@ abstract class SeriesApi {
   Future<List<Serie>> getRecommendations({int page = 1});
   Future<Serie> getSerie(String serieId);
   Future<List<Season>> getSeasons(int seasonNumber);
+  Future<List<Episode>> getEpisodes(
+      {required int serieId, required int seasonNumber});
 }
 
 @Injectable(as: SeriesApi)
@@ -67,5 +70,26 @@ class SeriesApiAdapter implements SeriesApi {
   Future<Serie> getSerie(String serieId) {
     // TODO: implement getSerie
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Episode>> getEpisodes(
+      {required int serieId, required int seasonNumber}) async {
+    http.Response response = await http.get(
+      Uri.https(
+        'api.themoviedb.org',
+        '/3/tv/$serieId/season/$seasonNumber',
+        {
+          'api_key': apiKey,
+        },
+      ),
+    );
+
+    final List<Episode> episodes =
+        (jsonDecode(response.body)['episodes'] as List<dynamic>)
+            .map((e) => Episode.fromJson(e))
+            .toList();
+
+    return episodes;
   }
 }
