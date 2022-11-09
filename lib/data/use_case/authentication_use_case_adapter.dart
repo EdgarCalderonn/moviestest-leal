@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:moviestest/domain/models/auth_status.dart';
 import 'package:moviestest/domain/repository/authentication_repository.dart';
 import 'package:moviestest/domain/use_case/authentication_use_case.dart';
 
@@ -16,5 +17,10 @@ class AuthenticationUseCaseAdapter implements AuthenticationUseCase {
   @override
   Future<bool> logout() {
     return _repository.logout();
+  }
+
+  @override
+  Stream<AuthStatus> authStatusStream() {
+    return _repository.authStatusStream();
   }
 }

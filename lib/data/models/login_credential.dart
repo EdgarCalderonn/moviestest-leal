@@ -1,6 +1,14 @@
 class LoginCredential {
-  final String email;
+  final String name;
   final String password;
 
-  LoginCredential(this.email, this.password);
+  LoginCredential(this.name, this.password);
+
+  @override
+  bool operator ==(Object other) {
+    return (other is LoginCredential) &&
+        other.name == name &&
+        other.password == password;
+  }
+  
 }
