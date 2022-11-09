@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:moviestest/domain/models/auth_status.dart';
 import 'package:moviestest/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:moviestest/presentation/pages/home/home_page.dart';
-import 'package:moviestest/presentation/pages/login/login_page.dart';
 import 'package:moviestest/presentation/pages/splash/splash_page.dart';
+import 'package:moviestest/presentation/pages/welcome/welcome_page.dart';
 import 'package:moviestest/presentation/state/base_state.dart';
 
 class AuthenticationWrapper extends StatefulWidget {
@@ -21,12 +21,13 @@ class _AuthenticationWrapperState
       stream: bloc!.authStatusStream,
       builder: (BuildContext context, AsyncSnapshot<AuthStatus> snapshot) {
         if (snapshot.hasData) {
+
           switch (snapshot.data!) {
             case AuthStatus.UNINITIALIZED:
               return const SplashPage();
 
             case AuthStatus.LOGGED_OUT:
-              return const LoginPage();
+              return const WelcomePage();
 
             case AuthStatus.LOGGED_IN:
               return const HomePage();

@@ -6,7 +6,14 @@ import 'package:rxdart/subjects.dart';
 
 @Injectable(as: AuthenticationRepository)
 class AuthenticationService implements AuthenticationRepository {
-  AuthenticationService() {
+  static final AuthenticationService _singleton =
+      AuthenticationService._internal();
+
+  factory AuthenticationService() {
+    return _singleton;
+  }
+
+  AuthenticationService._internal(){
     initialize();
   }
 
