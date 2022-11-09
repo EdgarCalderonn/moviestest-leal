@@ -8,7 +8,8 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome page'),
+        title: const Text('Welcome'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -33,6 +34,9 @@ class WelcomePage extends StatelessWidget {
                               builder: (context) => const LoginPage()));
                     },
                     child: const Text('Log in'))),
+                    
+
+                    TextButton(onPressed: (){}, child: const Text('Forgot password?'))
           ],
         ),
       ),
