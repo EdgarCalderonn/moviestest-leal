@@ -16,12 +16,23 @@ class HomeBloc extends Bloc {
   final BehaviorSubject<List<Serie>> _popularSeriesSubject =
       BehaviorSubject<List<Serie>>();
 
+  final BehaviorSubject<List<Serie>> _recommendedSeriesSubject =
+      BehaviorSubject<List<Serie>>();
+
   ValueStream<List<Serie>> get popularSeriesStream =>
       _popularSeriesSubject.stream;
 
-  Future<void> getSeries() async {
+  ValueStream<List<Serie>> get recommendedSeriesStream =>
+      _recommendedSeriesSubject.stream;
+
+  Future<void> getPopularSeries() async {
     final List<Serie> series = await _seriesUseCase.getPopular();
     _popularSeriesSubject.value = series;
+  }
+
+    Future<void> getRecommendedSeries() async {
+    final List<Serie> series = await _seriesUseCase.getRecommendations();
+    _recommendedSeriesSubject.value = series;
   }
 
   void logout() {

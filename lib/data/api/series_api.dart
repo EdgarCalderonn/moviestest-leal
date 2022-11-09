@@ -6,6 +6,9 @@ import 'package:http/http.dart' as http;
 
 abstract class SeriesApi {
   Future<List<Serie>> getPopular({int page = 1});
+  Future<List<Serie>> getRecommendations({int page = 1});
+  Future<Serie> getSerie(String serieId);
+  Future<List<Season>> getSeasons(int seasonNumber);
 }
 
 @Injectable(as: SeriesApi)
@@ -14,11 +17,16 @@ class SeriesApiAdapter implements SeriesApi {
 
   @override
   Future<List<Serie>> getPopular({int page = 1}) async {
-    http.Response response =
-        await http.get(Uri.https('api.themoviedb.org', '/3/tv/popular', {
-      'api_key': apiKey,
-      'page': page.toString(),
-    }));
+    http.Response response = await http.get(
+      Uri.https(
+        'api.themoviedb.org',
+        '/3/tv/popular',
+        {
+          'api_key': apiKey,
+          'page': page.toString(),
+        },
+      ),
+    );
 
     final List<Serie> populars =
         (jsonDecode(response.body)['results'] as List<dynamic>)
@@ -26,5 +34,38 @@ class SeriesApiAdapter implements SeriesApi {
             .toList();
 
     return populars;
+  }
+
+  @override
+  Future<List<Serie>> getRecommendations({int page = 1}) async {
+    http.Response response = await http.get(
+      Uri.https(
+        'api.themoviedb.org',
+        '/3/tv/top_rated',
+        {
+          'api_key': apiKey,
+          'page': page.toString(),
+        },
+      ),
+    );
+
+    final List<Serie> recommendations =
+        (jsonDecode(response.body)['results'] as List<dynamic>)
+            .map((e) => Serie.fromJson(e))
+            .toList();
+
+    return recommendations;
+  }
+
+  @override
+  Future<List<Season>> getSeasons(int seasonNumber) {
+    // TODO: implement getSeasons
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Serie> getSerie(String serieId) {
+    // TODO: implement getSerie
+    throw UnimplementedError();
   }
 }

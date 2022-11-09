@@ -13,4 +13,21 @@ class SeriesService implements SeriesRepository {
   Future<List<Serie>> getPopular({int page = 1}) {
     return api.getPopular(page: page);
   }
+  
+  @override
+  Future<List<Serie>> getRecommendations({int page = 1}) {
+    return api.getRecommendations();
+  }
+  
+  @override
+  Future<List<Season>> getSeasons(int seasonNumber) {
+    // TODO: implement getSeasons
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<Serie> getSerie(String serieId) {
+    // TODO: implement getSerie
+    throw UnimplementedError();
+  }
 }

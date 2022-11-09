@@ -13,4 +13,21 @@ class SeriesUseCaseAdapter implements SeriesUseCase {
   Future<List<Serie>> getPopular({int page = 1}) {
     return repository.getPopular(page: page);
   }
+  
+  @override
+  Future<List<Serie>> getRecommendations({int page = 1}) {
+    return repository.getRecommendations(page: page);
+  }
+  
+  @override
+  Future<List<Season>> getSeasons(int seasonNumber) {
+    // TODO: implement getSeasons
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<Serie> getSerie(String serieId) {
+    // TODO: implement getSerie
+    throw UnimplementedError();
+  }
 }
