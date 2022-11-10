@@ -24,6 +24,7 @@ class WelcomePage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+
             SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -34,9 +35,7 @@ class WelcomePage extends StatelessWidget {
                               builder: (context) => const LoginPage()));
                     },
                     child: const Text('Log in'))),
-                    
-
-                    TextButton(onPressed: (){}, child: const Text('Forgot password?'))
+            TextButton(onPressed: () {}, child: const Text('Forgot password?'))
           ],
         ),
       ),

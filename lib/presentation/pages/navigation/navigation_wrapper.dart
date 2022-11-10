@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moviestest/presentation/bloc/navigation/navigation_bloc.dart';
+import 'package:moviestest/presentation/pages/favorites/favorites_page.dart';
 import 'package:moviestest/presentation/pages/home/home_page.dart';
 import 'package:moviestest/presentation/pages/recent/recent_page.dart';
 import 'package:moviestest/presentation/state/base_state.dart';
@@ -26,7 +27,7 @@ class _NavigationWrapperState
                     return const HomePage();
 
                   case 1:
-                  return const Scaffold();
+                  return const FavoritesPage();
 
                   case 2:
                   return const RecentPage();

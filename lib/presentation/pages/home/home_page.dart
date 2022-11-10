@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:moviestest/domain/models/serie.dart';
+import 'package:moviestest/presentation/bloc/favorites/favorites_bloc.dart';
 import 'package:moviestest/presentation/bloc/home/home_bloc.dart';
+import 'package:moviestest/presentation/bloc/provider/provider.dart';
+import 'package:moviestest/presentation/dependency_injection/injection.dart';
 import 'package:moviestest/presentation/pages/serie/serie_page.dart';
-import 'package:moviestest/presentation/pages/serie_detail/serie_detail_page.dart';
 import 'package:moviestest/presentation/state/base_state.dart';
+import 'package:moviestest/presentation/widgets/serie_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +16,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends BaseState<HomePage, HomeBloc> {
+  final FavoritesBloc favoritesBloc =
+      Provider.of<FavoritesBloc>(() => getIt.get<FavoritesBloc>())!;
+
   @override
   void initState() {
     super.initState();
@@ -158,136 +164,32 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
             const SizedBox(
               height: 20,
             ),
-            StreamBuilder<List<Serie>>(
-                stream: bloc!.recommendedSeriesStream,
-                builder: (context, recommendedSnapshot) {
-                  if (recommendedSnapshot.hasData) {
-                    final List<Serie> recommended = recommendedSnapshot.data!;
+            StreamBuilder(
+                stream: favoritesBloc.favoriteSeriesStream,
+                builder:
+                    (BuildContext context, AsyncSnapshot favoritesSnapshot) {
+                  return StreamBuilder<List<Serie>>(
+                      stream: bloc!.recommendedSeriesStream,
+                      builder: (context, recommendedSnapshot) {
+                        if (recommendedSnapshot.hasData) {
+                          final List<Serie> recommended =
+                              recommendedSnapshot.data!;
 
-                    return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ...recommended
-                              .map<Widget>((serie) => GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SeriePage(serie)));
-                                    },
-                                    child: Container(
-                                      margin: const EdgeInsets.only(
-                                        bottom: 30,
-                                      ),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Hero(
-                                            tag: serie.id!,
-                                            child: SizedBox(
-                                              height: 170,
-                                              width: 130,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: Image.network(
-                                                  serie.getPosterImageUrl(
-                                                    type: SerieImageType.w300,
-                                                  ),
-                                                  fit: BoxFit.fill,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                              child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 20,
-                                            ),
-                                            height: 170,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(serie.name!),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  children: const [
-                                                    Icon(
-                                                      Icons.star,
-                                                      size: 15,
-                                                    ),
-                                                    Icon(
-                                                      Icons.star,
-                                                      size: 15,
-                                                    ),
-                                                    Icon(
-                                                      Icons.star,
-                                                      size: 15,
-                                                    ),
-                                                    Icon(
-                                                      Icons.star,
-                                                      size: 15,
-                                                    ),
-                                                    Icon(
-                                                      Icons.star,
-                                                      size: 15,
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                    'IMDb: ${serie.voteAverage}'),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    ElevatedButton(
-                                                        onPressed: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (BuildContext
-                                                                          context) =>
-                                                                      SerieDetailPage(
-                                                                          serie)));
-                                                        },
-                                                        child: const Text(
-                                                            'Watch now')),
-                                                    IconButton(
-                                                        onPressed: () {},
-                                                        icon: const Icon(Icons
-                                                            .favorite_border))
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          )),
-                                        ],
-                                      ),
-                                    ),
-                                  ))
-                              .toList()
-                        ],
-                      ),
-                    );
-                  }
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ...recommended
+                                    .map<Widget>((serie) => SerieCard(serie))
+                                    .toList()
+                              ],
+                            ),
+                          );
+                        }
 
-                  return const SizedBox.shrink();
+                        return const SizedBox.shrink();
+                      });
                 })
           ],
         ),
