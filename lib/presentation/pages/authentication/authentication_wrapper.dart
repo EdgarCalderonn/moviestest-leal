@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moviestest/domain/models/auth_status.dart';
 import 'package:moviestest/presentation/bloc/authentication/authentication_bloc.dart';
-import 'package:moviestest/presentation/pages/home/home_page.dart';
+import 'package:moviestest/presentation/pages/navigation/navigation_wrapper.dart';
 import 'package:moviestest/presentation/pages/splash/splash_page.dart';
 import 'package:moviestest/presentation/pages/welcome/welcome_page.dart';
 import 'package:moviestest/presentation/state/base_state.dart';
@@ -30,7 +30,7 @@ class _AuthenticationWrapperState
               return const WelcomePage();
 
             case AuthStatus.LOGGED_IN:
-              return const HomePage();
+              return const NavigationWrapper();
           }
         }
 
