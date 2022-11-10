@@ -8,4 +8,6 @@ abstract class SeriesUseCase {
   Future<List<Season>> getSeasons(int seasonNumber);
   Future<List<Episode>> getEpisodes(
       {required int serieId, required int seasonNumber});
+
+  Future<List<Serie>> getRecent();
 }

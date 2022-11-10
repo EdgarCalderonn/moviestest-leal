@@ -12,6 +12,7 @@ abstract class SeriesApi {
   Future<List<Season>> getSeasons(int seasonNumber);
   Future<List<Episode>> getEpisodes(
       {required int serieId, required int seasonNumber});
+  Future<List<Serie>> getRecent();
 }
 
 @Injectable(as: SeriesApi)
@@ -91,5 +92,25 @@ class SeriesApiAdapter implements SeriesApi {
             .toList();
 
     return episodes;
+  }
+
+  @override
+  Future<List<Serie>> getRecent() async {
+    http.Response response = await http.get(
+      Uri.https(
+        'api.themoviedb.org',
+        '/3/tv/airing_today',
+        {
+          'api_key': apiKey,
+        },
+      ),
+    );
+
+    final List<Serie> recent =
+        (jsonDecode(response.body)['results'] as List<dynamic>)
+            .map((e) => Serie.fromJson(e))
+            .toList();
+
+    return recent;
   }
 }

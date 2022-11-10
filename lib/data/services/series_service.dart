@@ -37,4 +37,9 @@ class SeriesService implements SeriesRepository {
       {required int serieId, required int seasonNumber}) {
     return api.getEpisodes(serieId: serieId, seasonNumber: seasonNumber);
   }
+  
+  @override
+  Future<List<Serie>> getRecent() {
+    return api.getRecent();
+  }
 }

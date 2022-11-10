@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moviestest/presentation/bloc/navigation/navigation_bloc.dart';
 import 'package:moviestest/presentation/pages/home/home_page.dart';
+import 'package:moviestest/presentation/pages/recent/recent_page.dart';
 import 'package:moviestest/presentation/state/base_state.dart';
 
 class NavigationWrapper extends StatefulWidget {
@@ -28,7 +29,7 @@ class _NavigationWrapperState
                   return const Scaffold();
 
                   case 2:
-                  return const Scaffold();
+                  return const RecentPage();
                   
                 }
 

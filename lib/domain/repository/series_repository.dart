@@ -6,6 +6,7 @@ abstract class SeriesRepository {
   Future<List<Serie>> getRecommendations({int page = 1});
   Future<Serie> getSerie(String serieId);
   Future<List<Season>> getSeasons(int seasonNumber);
-    Future<List<Episode>> getEpisodes(
+  Future<List<Episode>> getEpisodes(
       {required int serieId, required int seasonNumber});
+  Future<List<Serie>> getRecent();
 }
